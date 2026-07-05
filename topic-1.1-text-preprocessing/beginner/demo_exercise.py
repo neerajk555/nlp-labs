@@ -1,115 +1,204 @@
 """
-Topic 1.1 - Beginner Demo Exercise
-Basic Text Preprocessing Pipeline
+===============================================================================
+TOPIC 1.1 - BEGINNER DEMO: Basic Text Preprocessing Pipeline
+===============================================================================
 
-Learning Goals:
-- Understand the steps in a basic text preprocessing pipeline
-- Apply lowercasing, punctuation removal, and stopword removal
-- See the impact of each preprocessing step
+🎯 LEARNING GOALS
+-----------------
+By completing this exercise, you will:
+1. Understand the importance of text preprocessing
+2. Apply lowercasing, punctuation removal, and stopword removal
+3. See the impact of each preprocessing step on text
+4. Build a reusable preprocessing function
 
-TODO: Complete the functions marked with TODO comments
+📚 KEY CONCEPTS
+---------------
+Text cleaning, tokenization, stopword removal, regex patterns
+
+⏱️ TIME ESTIMATE: 30-45 minutes
+
+🔧 VS CODE SETUP INSTRUCTIONS
+------------------------------
+1. Open this file in VS Code
+2. Open integrated terminal: View → Terminal (or Ctrl+`)
+3. Navigate to this directory:
+   cd e:/ey-ai/nlp-labs/topic-1.1-text-preprocessing/beginner
+4. Run this file:
+   python demo_exercise.py
+5. To debug:
+   - Set breakpoints (click left margin or press F9)
+   - Press F5 to start debugging
+
+📝 WHAT YOU NEED TO DO
+----------------------
+Complete the following functions marked with # TODO:
+
+TODO 1: Implement remove_urls() to remove http:// and https:// URLs
+        Hint: Use regex pattern r'https?://\S+'
+        
+TODO 2: Implement remove_emails() to remove email addresses
+        Hint: Use regex pattern r'\S+@\S+'
+        
+TODO 3: Implement remove_punctuation() to remove all punctuation
+        Hint: Use string.punctuation and str.translate()
+        
+TODO 4: Implement remove_stopwords() to filter out common words
+        Hint: Use list comprehension to filter words not in stopwords set
+        
+TODO 5: Implement preprocess_text() to chain all steps together
+        Hint: Call functions in this order: URLs → emails → lowercase → 
+              punctuation → whitespace → stopwords
+
+💡 EXPECTED OUTPUT
+------------------
+When complete, you should see:
+- Original text with URLs, emails, punctuation
+- Step-by-step transformation showing each preprocessing stage
+- Final cleaned text
+- Word count statistics (before vs after)
+
+Let's get started! 🚀
 """
 
 import re
 import string
+from typing import List
 
-# Sample text for demonstration
-sample_text = """
+# Sample texts for demonstration
+sample_texts = [
+    """
     The Quick BROWN fox jumps over the lazy dog! 
     Visit https://example.com for more info.
     Email me at contact@example.com. #NLP #AI
-"""
+    """,
+    "Check out http://test.org and email test@test.com!",
+    "   Multiple    spaces   and\nnewlines\n\nshould be handled!!!   "
+]
 
 # Common English stopwords
-STOPWORDS = {'the', 'is', 'at', 'which', 'on', 'a', 'an', 'for', 'over', 'me'}
+STOPWORDS = {'the', 'is', 'at', 'which', 'on', 'a', 'an', 'for', 'over', 'me', 
+             'of', 'and', 'to', 'in', 'this', 'out'}
 
 
-def remove_urls(text):
-    """Remove URLs from text"""
-    # TODO: Use regex to remove URLs starting with http:// or https://
-    # Pattern: r'https?://\S+'
-    # Hint: Use re.sub() to replace URLs with empty string
-    pass
-
-
-def remove_emails(text):
-    """Remove email addresses from text"""
-    # TODO: Use regex to remove email patterns
-    # Pattern: r'\S+@\S+'
-    pass
-
-
-def remove_punctuation(text):
-    """Remove punctuation from text"""
-    # TODO: Use str.translate() with string.punctuation
-    # Create translation table: str.maketrans('', '', string.punctuation)
-    pass
-
-
-def remove_stopwords(words, stopwords=STOPWORDS):
-    """Remove stopwords from list of words"""
-    # TODO: Filter out words that are in the stopwords set
-    # Return a list of words not in stopwords
-    pass
-
-
-def preprocess_text(text, remove_stops=True):
+def remove_urls(text: str) -> str:
     """
-    Complete preprocessing pipeline
+    Remove URLs from text
     
-    Steps:
-    1. Remove URLs
-    2. Remove emails
-    3. Lowercase
-    4. Remove punctuation
-    5. Tokenize (split into words)
-    6. Remove stopwords (if enabled)
+    Args:
+        text: Input text
+    
+    Returns:
+        Text with URLs removed
     """
-    # TODO: Step 1 - Remove URLs
-    text = remove_urls(text)
+    # TODO: Implement this function
+    # Hint: Use re.sub(r'https?://\S+', '', text)
+    pass
+
+
+def remove_emails(text: str) -> str:
+    """
+    Remove email addresses from text
     
-    # TODO: Step 2 - Remove emails
+    Args:
+        text: Input text
     
-    # TODO: Step 3 - Convert to lowercase
+    Returns:
+        Text with emails removed
+    """
+    # TODO: Implement this function
+    # Hint: Use re.sub(r'\S+@\S+', '', text)
+    pass
+
+
+def remove_punctuation(text: str) -> str:
+    """
+    Remove punctuation from text
     
-    # TODO: Step 4 - Remove punctuation
+    Args:
+        text: Input text
     
-    # TODO: Step 5 - Tokenize (split by whitespace)
-    words = None  # Replace with actual tokenization
+    Returns:
+        Text with punctuation removed
+    """
+    # TODO: Implement this function
+    # Hint: Use str.translate() with string.punctuation
+    # translator = str.maketrans('', '', string.punctuation)
+    pass
+
+
+def normalize_whitespace(text: str) -> str:
+    """
+    Normalize multiple spaces, tabs, newlines to single space
     
-    # TODO: Step 6 - Remove stopwords
-    if remove_stops:
-        words = remove_stopwords(words)
+    Args:
+        text: Input text
     
-    return words
+    Returns:
+        Text with normalized whitespace
+    """
+    # This one is done for you as an example!
+    text = re.sub(r'\s+', ' ', text)
+    return text.strip()
+
+
+def remove_stopwords(words: List[str], stopwords: set = STOPWORDS) -> List[str]:
+    """
+    Remove stopwords from list of words
+    
+    Args:
+        words: List of words
+        stopwords: Set of stopwords to remove
+    
+    Returns:
+        List of words with stopwords removed
+    """
+    # TODO: Implement this function
+    # Hint: return [word for word in words if word.lower() not in stopwords]
+    pass
+
+
+def preprocess_text(text: str, remove_stops: bool = True) -> str:
+    """
+    Complete preprocessing pipeline combining all steps
+    
+    Args:
+        text: Input text to preprocess
+        remove_stops: Whether to remove stopwords (default True)
+    
+    Returns:
+        Preprocessed text as string
+    """
+    # TODO: Implement this function by calling the functions above in order
+    # Step 1: Remove URLs
+    # Step 2: Remove emails
+    # Step 3: Convert to lowercase
+    # Step 4: Remove punctuation
+    # Step 5: Normalize whitespace
+    # Step 6: Remove stopwords (if remove_stops is True)
+    pass
 
 
 def main():
-    """Run the preprocessing demo"""
-    print("Original Text:")
-    print(sample_text)
-    print("\n" + "="*60 + "\n")
+    """
+    Main execution function
+    """
+    print("=" * 80)
+    print("TOPIC 1.1 - BEGINNER DEMO")
+    print("Basic Text Preprocessing Pipeline")
+    print("=" * 80)
+    print()
     
-    # TODO: Process text with stopwords removed
-    processed_with_stops_removed = preprocess_text(sample_text, remove_stops=True)
+    # Test your implementations here
+    test_text = sample_texts[0]
+    print(f"Original text:\n{test_text}\n")
     
-    # TODO: Process text keeping stopwords
-    processed_with_stops_kept = preprocess_text(sample_text, remove_stops=False)
+    # TODO: Call your functions and print results
+    # Example:
+    # preprocessed = preprocess_text(test_text)
+    # print(f"Preprocessed: {preprocessed}")
     
-    print("Processed (stopwords removed):")
-    print(processed_with_stops_removed)
-    print(f"\nWord count: {len(processed_with_stops_removed)}")
-    
-    print("\n" + "="*60 + "\n")
-    
-    print("Processed (stopwords kept):")
-    print(processed_with_stops_kept)
-    print(f"\nWord count: {len(processed_with_stops_kept)}")
-    
-    # Calculate reduction
-    # TODO: Calculate percentage of words removed by stopword filtering
-    reduction = 0  # Calculate actual reduction
-    print(f"\nStopword removal reduced vocabulary by {reduction:.1f}%")
+    print("\n⚠️  Complete the TODO items above, then run this file again!")
+    print("Compare your output with demo_solution.py when done.")
 
 
 if __name__ == "__main__":

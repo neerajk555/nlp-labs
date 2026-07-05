@@ -1,146 +1,178 @@
 """
-Topic 1.1 - Beginner Practice 1
-Tokenization Comparison
+===============================================================================
+TOPIC 1.1 - BEGINNER PRACTICE 1: Tokenization Strategies
+===============================================================================
 
-Learning Goals:
-- Compare character, word, and simple subword tokenization
-- Understand vocabulary size implications
-- Handle unknown words
+🎯 LEARNING GOALS
+-----------------
+By completing this exercise, you will:
+1. Understand different tokenization approaches
+2. Implement character, word, and whitespace tokenization
+3. Compare tokenization results on different text types
+4. Learn when to use each tokenization strategy
 
-TODO: Complete the tokenization functions
+📚 KEY CONCEPTS
+---------------
+Character tokenization, word tokenization, whitespace splitting, token boundaries
+
+⏱️ TIME ESTIMATE: 45-60 minutes
+
+🔧 VS CODE SETUP INSTRUCTIONS
+------------------------------
+1. Open this file in VS Code
+2. Open integrated terminal: View → Terminal (or Ctrl+`)
+3. Navigate to: cd e:/ey-ai/nlp-labs/topic-1.1-text-preprocessing/beginner
+4. Run: python practice1_exercise.py
+5. To debug: Set breakpoints (F9) and press F5
+
+📝 WHAT YOU NEED TO DO
+----------------------
+TODO 1: Implement character_tokenize() - split text into individual characters
+        Hint: Use list(text) or [char for char in text]
+        
+TODO 2: Implement word_tokenize_simple() - split by whitespace
+        Hint: Use text.split()
+        
+TODO 3: Implement word_tokenize_punctuation() - handle punctuation as separate tokens
+        Hint: Use regex pattern r'\w+|[^\w\s]' to match words or punctuation
+        
+TODO 4: Implement word_tokenize_nltk() - use NLTK's word tokenizer
+        Hint: import nltk; Use nltk.word_tokenize(text)
+        
+TODO 5: Compare all methods and analyze differences
+
+💡 EXPECTED OUTPUT
+------------------
+- Comparison table showing token counts for each method
+- Side-by-side examples of how each method handles special cases
+- Analysis of which method works best for different scenarios
+
+Let's get started! 🚀
 """
 
-# Sample texts
-texts = [
-    "Natural Language Processing is amazing!",
-    "NLP techniques include tokenization.",
-    "Machine learning models need preprocessed data."
+import re
+from typing import List
+from collections import Counter
+
+# Sample texts for testing different tokenization methods
+sample_texts = [
+    "Hello, world! How are you today?",
+    "It's a beautiful day. Don't you think?",
+    "Email: test@example.com, URL: https://test.com",
+    "Prices: $19.99, €25.50, £15.00",
+    "I'm really excited!!! This is amazing!!!!"
 ]
 
 
-def character_tokenize(text):
+def character_tokenize(text: str) -> List[str]:
     """
-    Tokenize text into individual characters
+    Split text into individual characters
     
-    TODO: Return a list of all characters in the text (including spaces)
-    Hint: list(text) or [char for char in text]
+    Args:
+        text: Input text
+    
+    Returns:
+        List of characters
+        
+    Example:
+        >>> character_tokenize("Hi!")
+        ['H', 'i', '!']
     """
+    # TODO: Implement this function
+    # Hint: Simply convert text to list: list(text)
     pass
 
 
-def word_tokenize(text):
+def word_tokenize_simple(text: str) -> List[str]:
     """
-    Tokenize text into words (simple whitespace splitting)
+    Split text by whitespace (simplest method)
     
-    TODO: Split text by whitespace and return list of words
-    Hint: text.split()
+    Args:
+        text: Input text
+    
+    Returns:
+        List of tokens
+        
+    Example:
+        >>> word_tokenize_simple("Hello world")
+        ['Hello', 'world']
     """
+    # TODO: Implement this function
+    # Hint: Use text.split()
     pass
 
 
-def simple_subword_tokenize(text, max_word_length=5):
+def word_tokenize_punctuation(text: str) -> List[str]:
     """
-    Simple subword tokenization: split long words into chunks
+    Split text into words and punctuation tokens
     
-    This is a simplified version. Real subword tokenization (BPE, WordPiece)
-    is more sophisticated.
+    Args:
+        text: Input text
     
-    Example: "tokenization" → ["token", "izati", "on"]
-    
-    TODO: 
-    1. Split text into words
-    2. For each word:
-       - If length <= max_word_length, keep as is
-       - If length > max_word_length, split into chunks of max_word_length
-    3. Return list of subword tokens
+    Returns:
+        List of tokens (words and punctuation separate)
+        
+    Example:
+        >>> word_tokenize_punctuation("Hello, world!")
+        ['Hello', ',', 'world', '!']
     """
+    # TODO: Implement this function
+    # Hint: Use re.findall(r'\w+|[^\w\s]', text)
+    # This pattern matches either words (\w+) or punctuation ([^\w\s])
     pass
 
 
-def calculate_vocabulary_size(tokens_list):
+def word_tokenize_nltk(text: str) -> List[str]:
     """
-    Calculate unique token count (vocabulary size)
+    Use NLTK's word tokenizer (handles contractions, punctuation well)
     
-    TODO: Return the number of unique tokens
-    Hint: len(set(tokens_list))
+    Args:
+        text: Input text
+    
+    Returns:
+        List of tokens
+        
+    Example:
+        >>> word_tokenize_nltk("It's great!")
+        ['It', "'s", 'great', '!']
     """
+    # TODO: Implement this function
+    # Hint: 
+    # import nltk
+    # nltk.download('punkt', quiet=True)  # Download tokenizer data
+    # return nltk.word_tokenize(text)
     pass
 
 
-def analyze_tokenization():
+def compare_tokenizers(text: str):
     """
-    Compare different tokenization strategies
+    Compare all tokenization methods on given text
     
-    TODO: For each text in texts:
-    1. Apply all three tokenization methods
-    2. Calculate vocabulary size for each method
-    3. Print comparison results
+    Args:
+        text: Input text to tokenize
     """
-    print("=" * 70)
-    print("TOKENIZATION COMPARISON")
-    print("=" * 70)
-    
-    for i, text in enumerate(texts, 1):
-        print(f"\nText {i}: \"{text}\"")
-        print("-" * 70)
-        
-        # TODO: Apply character tokenization
-        char_tokens = None
-        
-        # TODO: Apply word tokenization
-        word_tokens = None
-        
-        # TODO: Apply subword tokenization
-        subword_tokens = None
-        
-        # TODO: Print results for each method
-        print(f"Character tokens ({len(char_tokens)} tokens):")
-        print(f"  {char_tokens[:20]}...")  # Show first 20
-        
-        print(f"\nWord tokens ({len(word_tokens)} tokens):")
-        print(f"  {word_tokens}")
-        
-        print(f"\nSubword tokens ({len(subword_tokens)} tokens):")
-        print(f"  {subword_tokens}")
-    
-    # TODO: Calculate overall vocabulary sizes
-    print("\n" + "=" * 70)
-    print("VOCABULARY SIZE COMPARISON")
-    print("=" * 70)
-    
-    # Combine all texts
-    all_text = " ".join(texts)
-    
-    # TODO: Calculate vocab size for each method
-    char_vocab = None
-    word_vocab = None
-    subword_vocab = None
-    
-    print(f"Character-level vocabulary size: {char_vocab}")
-    print(f"Word-level vocabulary size: {word_vocab}")
-    print(f"Subword-level vocabulary size: {subword_vocab}")
-    
-    # TODO: Demonstrate handling unknown words
-    print("\n" + "=" * 70)
-    print("HANDLING UNKNOWN WORDS")
-    print("=" * 70)
-    
-    new_text = "Antidisestablishmentarianism is fascinating!"
-    print(f"New text: \"{new_text}\"")
-    
-    # TODO: Show how each tokenization handles the long unknown word
+    # TODO: Implement this function
+    # Call all tokenization methods and print results side by side
+    # Show token counts and first few tokens from each method
+    pass
 
 
 def main():
-    analyze_tokenization()
+    """Main execution"""
+    print("=" * 80)
+    print("TOPIC 1.1 - BEGINNER PRACTICE 1")
+    print("Tokenization Strategies")
+    print("=" * 80)
+    print()
     
-    print("\n" + "=" * 70)
-    print("KEY TAKEAWAYS:")
-    print("=" * 70)
-    print("1. Character tokenization: Small vocab, long sequences")
-    print("2. Word tokenization: Large vocab, struggles with unknown words")
-    print("3. Subword tokenization: Balanced approach, handles unknowns")
-    print("4. LLMs use subword tokenization (BPE, WordPiece) for this reason!")
+    # TODO: Test your implementations
+    # Example:
+    # for text in sample_texts:
+    #     print(f"\nText: {text}")
+    #     compare_tokenizers(text)
+    
+    print("\n⚠️  Complete the TODO items above, then run this file again!")
+    print("Compare your output with practice1_solution.py when done.")
 
 
 if __name__ == "__main__":

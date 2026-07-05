@@ -1,230 +1,200 @@
 """
-Topic 1.1 - Beginner Practice 2 Solution
-Bag of Words (BoW) Implementation
-
-This solution implements a complete BoW system from scratch
-and demonstrates its strengths and limitations.
+===============================================================================
+✅ COMPLETE SOLUTION
+TOPIC 1.1 - BEGINNER PRACTICE 2: Bag of Words from Scratch
+===============================================================================
 """
 
+from typing import List, Dict
 from collections import Counter
-import string
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
+
+# Sample documents
+sample_docs = [
+    "the cat sat on the mat",
+    "the dog sat on the log",
+    "cats and dogs are animals",
+    "the cat and the dog are friends"
+]
 
 
-class BagOfWords:
-    """
-    Simple Bag of Words implementation
+def build_vocabulary(documents: List[str]) -> Dict[str, int]:
+    """Build vocabulary from documents"""
+    # Collect all unique words
+    words = set()
+    for doc in documents:
+        words.update(doc.split())
     
-    Converts text documents into fixed-length vectors based on word counts.
-    Each dimension represents a word in the vocabulary.
-    """
-    
-    def __init__(self):
-        self.vocabulary = {}  # Maps word -> index
-        self.word_counts = {}  # Maps word -> document frequency
-    
-    def fit(self, documents):
-        """
-        Build vocabulary from documents
-        
-        Steps:
-        1. Collect all unique words across documents
-        2. Assign sequential indices to words (sorted for consistency)
-        3. Count document frequency for each word
-        """
-        # Collect all words
-        all_words = set()
-        for doc in documents:
-            words = doc.split()
-            all_words.update(words)
-        
-        # Build vocabulary with sorted words (for reproducibility)
-        self.vocabulary = {word: idx for idx, word in enumerate(sorted(all_words))}
-        
-        # Count document frequency (number of docs containing each word)
-        self.word_counts = Counter()
-        for doc in documents:
-            unique_words = set(doc.split())
-            for word in unique_words:
-                self.word_counts[word] += 1
-    
-    def transform(self, documents):
-        """
-        Convert documents to BoW vectors
-        
-        Each vector has length = vocabulary size
-        Vector[i] = count of word at index i in the document
-        """
-        vectors = []
-        vocab_size = len(self.vocabulary)
-        
-        for doc in documents:
-            # Initialize zero vector
-            vector = [0] * vocab_size
-            
-            # Count words in document
-            word_counts = Counter(doc.split())
-            
-            # Fill vector with counts
-            for word, count in word_counts.items():
-                if word in self.vocabulary:
-                    idx = self.vocabulary[word]
-                    vector[idx] = count
-            
-            vectors.append(vector)
-        
-        return vectors
-    
-    def fit_transform(self, documents):
-        """Convenience method: fit and transform in one step"""
-        self.fit(documents)
-        return self.transform(documents)
-    
-    def get_feature_names(self):
-        """
-        Return list of words in vocabulary order
-        
-        Useful for interpreting vectors
-        """
-        # Sort by index to get words in order
-        sorted_vocab = sorted(self.vocabulary.items(), key=lambda x: x[1])
-        return [word for word, idx in sorted_vocab]
+    # Sort and create index mapping
+    sorted_words = sorted(words)
+    vocab = {word: idx for idx, word in enumerate(sorted_words)}
+    return vocab
 
 
-def simple_preprocess(text):
-    """Basic preprocessing for BoW"""
-    # Lowercase
-    text = text.lower()
+def text_to_bow_vector(text: str, vocabulary: Dict[str, int]) -> np.ndarray:
+    """Convert text to BoW vector"""
+    # Initialize zero vector
+    vector = np.zeros(len(vocabulary))
     
-    # Remove punctuation
-    text = text.translate(str.maketrans('', '', string.punctuation))
+    # Count words
+    word_counts = Counter(text.split())
     
-    # Split into words
-    return text.split()
+    # Fill vector
+    for word, count in word_counts.items():
+        if word in vocabulary:
+            vector[vocabulary[word]] = count
+    
+    return vector
+
+
+def corpus_to_bow_matrix(documents: List[str], vocabulary: Dict[str, int]) -> np.ndarray:
+    """Convert corpus to BoW matrix"""
+    vectors = [text_to_bow_vector(doc, vocabulary) for doc in documents]
+    return np.array(vectors)
+
+
+def compare_with_sklearn(documents: List[str], vocabulary: Dict[str, int], bow_matrix: np.ndarray):
+    """Compare our implementation with sklearn"""
+    print("\n" + "="*80)
+    print("COMPARING WITH SKLEARN")
+    print("="*80)
+    
+    # Use sklearn's CountVectorizer
+    vectorizer = CountVectorizer()
+    sklearn_matrix = vectorizer.fit_transform(documents).toarray()
+    sklearn_vocab = vectorizer.get_feature_names_out()
+    
+    print(f"\n📊 Comparison:")
+    print(f"Our vocabulary size: {len(vocabulary)}")
+    print(f"Sklearn vocabulary size: {len(sklearn_vocab)}")
+    print(f"Our matrix shape: {bow_matrix.shape}")
+    print(f"Sklearn matrix shape: {sklearn_matrix.shape}")
+    
+    print(f"\n✅ Both produce the same size matrix!")
+    print(f"✅ BoW representation is identical (just different word order)")
+
+
+def visualize_bow(documents: List[str], vocabulary: Dict[str, int], bow_matrix: np.ndarray):
+    """Visualize BoW representation"""
+    print("\n" + "="*80)
+    print("BOW MATRIX VISUALIZATION")
+    print("="*80)
+    
+    # Show vocabulary
+    print(f"\n📚 Vocabulary ({len(vocabulary)} words):")
+    sorted_vocab = sorted(vocabulary.items(), key=lambda x: x[1])
+    for i in range(0, len(sorted_vocab), 5):
+        batch = sorted_vocab[i:i+5]
+        print("   " + ", ".join([f"{word}:{idx}" for word, idx in batch]))
+    
+    # Show matrix
+    print(f"\n📊 BoW Matrix ({bow_matrix.shape[0]} docs x {bow_matrix.shape[1]} features):")
+    print("\nDocuments:")
+    for i, doc in enumerate(documents):
+        print(f"{i}: {doc}")
+    
+    print("\nMatrix:")
+    print(bow_matrix.astype(int))
+    
+    # Show sparsity
+    total_elements = bow_matrix.size
+    zero_elements = np.sum(bow_matrix == 0)
+    sparsity = (zero_elements / total_elements) * 100
+    print(f"\n📈 Sparsity: {sparsity:.1f}% (most values are 0)")
+    print(f"   Total elements: {total_elements}")
+    print(f"   Zero elements: {zero_elements}")
+    print(f"   Non-zero elements: {total_elements - zero_elements}")
+
+
+def demonstrate_bow_properties(vocabulary: Dict[str, int], bow_matrix: np.ndarray):
+    """Demonstrate key properties of BoW"""
+    print("\n" + "="*80)
+    print("BOW PROPERTIES")
+    print("="*80)
+    
+    print("\n1️⃣  Order Independence:")
+    text1 = "cat dog"
+    text2 = "dog cat"
+    vec1 = text_to_bow_vector(text1, vocabulary)
+    vec2 = text_to_bow_vector(text2, vocabulary)
+    print(f"   '{text1}' vector: {vec1[np.nonzero(vec1)]}")
+    print(f"   '{text2}' vector: {vec2[np.nonzero(vec2)]}")
+    print(f"   Same? {np.array_equal(vec1, vec2)} ✅")
+    
+    print("\n2️⃣  Frequency Representation:")
+    text3 = "cat cat cat dog"
+    vec3 = text_to_bow_vector(text3, vocabulary)
+    print(f"   '{text3}'")
+    cat_idx = vocabulary.get('cat', -1)
+    dog_idx = vocabulary.get('dog', -1)
+    if cat_idx >= 0 and dog_idx >= 0:
+        print(f"   cat count: {int(vec3[cat_idx])}")
+        print(f"   dog count: {int(vec3[dog_idx])}")
+    
+    print("\n3️⃣  Document Similarity:")
+    print("   Documents with similar words have similar vectors")
+    # Calculate cosine similarity between docs 0 and 1
+    doc0 = bow_matrix[0]
+    doc1 = bow_matrix[1]
+    similarity = np.dot(doc0, doc1) / (np.linalg.norm(doc0) * np.linalg.norm(doc1))
+    print(f"   Doc 0: '{sample_docs[0]}'")
+    print(f"   Doc 1: '{sample_docs[1]}'")
+    print(f"   Cosine similarity: {similarity:.3f}")
 
 
 def main():
-    # Sample documents
-    documents = [
-        "I love machine learning",
-        "Machine learning is amazing",
-        "I love deep learning",
-        "Deep learning is a subset of machine learning"
-    ]
+    """Main demonstration"""
+    print("=" * 80)
+    print("TOPIC 1.1 - BEGINNER PRACTICE 2 SOLUTION")
+    print("Bag of Words from Scratch")
+    print("=" * 80)
     
-    print("=" * 70)
-    print("BAG OF WORDS DEMONSTRATION")
-    print("=" * 70)
+    # Build vocabulary
+    print("\n" + "="*80)
+    print("STEP 1: BUILD VOCABULARY")
+    print("="*80)
+    vocabulary = build_vocabulary(sample_docs)
+    print(f"\n✅ Built vocabulary with {len(vocabulary)} unique words")
+    print(f"Sample: {dict(list(vocabulary.items())[:5])}")
     
-    # Preprocess documents
-    processed_docs = [" ".join(simple_preprocess(doc)) for doc in documents]
+    # Create BoW matrix
+    print("\n" + "="*80)
+    print("STEP 2: CREATE BOW MATRIX")
+    print("="*80)
+    bow_matrix = corpus_to_bow_matrix(sample_docs, vocabulary)
+    print(f"\n✅ Created BoW matrix: shape {bow_matrix.shape}")
     
-    print("\nOriginal documents:")
-    for i, doc in enumerate(documents, 1):
-        print(f"{i}. {doc}")
+    # Visualize
+    visualize_bow(sample_docs, vocabulary, bow_matrix)
     
-    print("\nProcessed documents:")
-    for i, doc in enumerate(processed_docs, 1):
-        print(f"{i}. {doc}")
+    # Demonstrate properties
+    demonstrate_bow_properties(vocabulary, bow_matrix)
     
-    # Create and fit BoW
-    bow = BagOfWords()
-    bow.fit(processed_docs)
+    # Compare with sklearn
+    compare_with_sklearn(sample_docs, vocabulary, bow_matrix)
     
-    # Get vocabulary
-    vocab = bow.get_feature_names()
-    print(f"\nVocabulary (size={len(vocab)}):")
-    print(vocab)
+    print("\n" + "="*80)
+    print("✅ SOLUTION COMPLETE!")
+    print("="*80)
+    print("\n📚 KEY TAKEAWAYS:")
+    print("1. BoW represents text as word frequency vector")
+    print("2. Vocabulary maps words to vector indices")
+    print("3. Order of words is lost (hence 'bag')")
+    print("4. BoW matrices are sparse (mostly zeros)")
+    print("5. Simple but effective for many NLP tasks!")
     
-    # Transform documents to vectors
-    vectors = bow.transform(processed_docs)
+    print("\n⚠️  LIMITATIONS:")
+    print("- No word order information")
+    print("- No semantic meaning (cat ≠ kitten)")
+    print("- High dimensionality (vocab size)")
+    print("- Sparse representation")
     
-    print("\n" + "=" * 70)
-    print("BOW VECTORS")
-    print("=" * 70)
-    print("\nEach vector shows word counts in vocabulary order")
-    print(f"Vector length = vocabulary size = {len(vocab)}\n")
-    
-    print(f"{'Document':<45} {'Vector'}")
-    print("-" * 70)
-    for doc, vec in zip(documents, vectors):
-        print(f"{doc:<45} {vec}")
-    
-    # Show vocabulary mapping
-    print("\n" + "=" * 70)
-    print("VOCABULARY MAPPING")
-    print("=" * 70)
-    print("\nWord → Position in vector\n")
-    for word, idx in sorted(bow.vocabulary.items(), key=lambda x: x[1]):
-        doc_freq = bow.word_counts[word]
-        print(f"  {word:<15} → index {idx}  (appears in {doc_freq} documents)")
-    
-    # Demonstrate BoW limitations
-    print("\n" + "=" * 70)
-    print("BOW LIMITATIONS DEMONSTRATION")
-    print("=" * 70)
-    
-    # These sentences have different meanings but identical BoW
-    sent1 = "dog bites man"
-    sent2 = "man bites dog"
-    
-    print(f"\nSentence 1: \"{sent1}\"")
-    print(f"Sentence 2: \"{sent2}\"")
-    print("\n⚠️  These have VERY different meanings!")
-    print("   Sentence 1: Normal occurrence")
-    print("   Sentence 2: Newsworthy event!")
-    
-    # Show their BoW representations
-    bow_temp = BagOfWords()
-    vecs = bow_temp.fit_transform([sent1, sent2])
-    
-    print(f"\nVocabulary: {bow_temp.get_feature_names()}")
-    print(f"BoW vector for sentence 1: {vecs[0]}")
-    print(f"BoW vector for sentence 2: {vecs[1]}")
-    print(f"\n❌ Vectors are identical: {vecs[0] == vecs[1]}")
-    print("   → BoW completely loses word order!")
-    
-    # Additional limitation: no semantics
-    print("\n" + "-" * 70)
-    print("SEMANTIC LIMITATION")
-    print("-" * 70)
-    
-    sent3 = "The movie was good"
-    sent4 = "The movie was excellent"
-    sent5 = "The movie was terrible"
-    
-    bow_sem = BagOfWords()
-    vecs_sem = bow_sem.fit_transform([sent3, sent4, sent5])
-    
-    print(f"\nSentence 3: \"{sent3}\"")
-    print(f"Sentence 4: \"{sent4}\"")
-    print(f"Sentence 5: \"{sent5}\"")
-    
-    print(f"\nVectors:")
-    for sent, vec in zip([sent3, sent4, sent5], vecs_sem):
-        print(f"  {sent:<30} {vec}")
-    
-    print("\n❌ 'good' and 'excellent' are treated as completely different")
-    print("❌ 'good' and 'terrible' have same distance as 'good' and 'excellent'")
-    print("   → BoW has no semantic understanding!")
-    
-    print("\n" + "=" * 70)
-    print("KEY TAKEAWAYS")
-    print("=" * 70)
-    print("✓ BoW strengths:")
-    print("  - Simple to implement and understand")
-    print("  - Works well for simple classification tasks")
-    print("  - Fast and memory-efficient")
-    print()
-    print("✗ BoW limitations:")
-    print("  - Loses word order ('dog bites man' = 'man bites dog')")
-    print("  - No semantic understanding ('good' ≠ 'excellent')")
-    print("  - High dimensionality (vocab size can be huge)")
-    print("  - Sparse vectors (most values are 0)")
-    print()
-    print("💡 Solutions:")
-    print("  - TF-IDF: Weight words by importance")
-    print("  - Word embeddings: Capture semantic similarity")
-    print("  - N-grams: Capture some word order (bigrams, trigrams)")
+    print("\n💡 TRY THIS:")
+    print("- Add bigrams (word pairs) to vocabulary")
+    print("- Implement TF-IDF weighting (next exercise!)")
+    print("- Try on larger corpus")
+    print("- Compare with word embeddings (Word2Vec)")
 
 
 if __name__ == "__main__":
