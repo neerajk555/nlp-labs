@@ -1,103 +1,55 @@
-# 🎓 NLP Fundamentals Labs - Master Index
+# 🎓 NLP Fundamentals Labs - Navigation
 
-**Complete Hands-On Exercises for NLP & GenAI Foundations**
-
----
-
-## 📋 Quick Navigation
-
-| Document | Purpose | Audience |
-|----------|---------|----------|
-| **[README.md](README.md)** | Overview & setup | Everyone - START HERE |
-| **[QUICK_START.md](QUICK_START.md)** | 5-minute getting started | Students |
-| **[EXERCISE_CATALOG.md](EXERCISE_CATALOG.md)** | All 28 exercises listed | Instructors/Students |
-| **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)** | What's complete, what's next | Instructors/Developers |
-| **This File** | Master index & navigation | Everyone |
+**Hands-On Exercises for Learning NLP Through Coding**
 
 ---
 
-## 🎯 Start Here Based on Your Role
+## 📋 Documentation Overview
 
-### 👨‍🎓 I'm a Student
-**Goal**: Learn NLP fundamentals through hands-on coding
+| Document | Purpose | Start Here? |
+|----------|---------|-------------|
+| **[README.md](README.md)** | Repository overview & setup | ✅ START HERE |
+| **[QUICK_START.md](QUICK_START.md)** | 5-minute getting started guide | For quick setup |
+| **[EXERCISE_CATALOG.md](EXERCISE_CATALOG.md)** | Complete exercise listing | For planning |
+| **This File** | Navigation & learning paths | Reference |
 
-1. **Setup** (10 minutes)
-   ```bash
-   cd e:/ey-ai/nlp-labs
-   pip install -r requirements.txt
-   copy .env.example .env
-   # Edit .env with your Azure OpenAI credentials
-   ```
+---
 
-2. **Start Learning** (Week 1)
-   - Read: [Topic 1.1 README](topic-1.1-text-preprocessing/README.md)
-   - Do: Topic 1.1 beginner exercises
-   - Practice: Complete TODOs, compare with solutions
+## 🎯 Getting Started
 
-3. **Progress Through Topics**
-   - Week 1: Topic 1.1 (Text Preprocessing)
-   - Week 2: Topics 1.2 & 1.3 (Similarity & Classification)
-   - Week 3: Topic 1.4 (RAG & GenAI)
+### For Students
 
-4. **Get Help**
-   - Check [QUICK_START.md](QUICK_START.md) for troubleshooting
-   - Review solution files for guidance
-   - Ask instructor for clarification
+**Day 1: Setup** (15 minutes)
+1. Clone the repository
+2. Install dependencies: `pip install -r requirements.txt`
+3. Configure Azure OpenAI (optional): Copy `.env.example` to `.env`
+4. Test setup: `cd topic-1.1-text-preprocessing/exercises && python demo_solution.py`
 
-### 👨‍🏫 I'm an Instructor
-**Goal**: Deliver effective NLP labs to students
+**Week 1: Text Preprocessing**
+- Read: [Topic 1.1 README](topic-1.1-text-preprocessing/README.md)
+- Complete: Topic 1.1 exercises (demo → practice1 → practice2)
 
-1. **Review Structure** (30 minutes)
-   - Read: [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md)
-   - Check: [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)
-   - Test: Run complete exercises from Topic 1.1
+**Week 2: Similarity & Classification**
+- Complete: [Topic 1.2](topic-1.2-semantic-similarity/) exercises
+- Complete: [Topic 1.3](topic-1.3-ner-classification/) exercises
 
-2. **Prepare for Class**
-   - Use topic READMEs as lecture slides basis
-   - Demo complete solution files in class
-   - Assign exercise files as homework
-   - Grade using solution files
+**Week 3: RAG & GenAI**
+- Complete: [Topic 1.4](topic-1.4-rag/) exercises
 
-3. **Customize Content**
-   - Modify exercises for your domain
-   - Add datasets relevant to students
-   - Create additional practice problems
-   - Adjust difficulty as needed
+### For Instructors
 
-4. **Complete Missing Exercises** (optional)
-   - See: Priority order in [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)
-   - Use: Templates and examples provided
-   - Test: Run and validate implementations
+**Planning** (30 minutes)
+1. Review [EXERCISE_CATALOG.md](EXERCISE_CATALOG.md) for all exercises
+2. Read topic READMEs to understand learning objectives
+3. Test run all solution files to verify they work
 
-### 👨‍💻 I'm a Developer
-**Goal**: Complete the remaining exercise implementations
+**Teaching Approach**
+- Use topic READMEs as lecture content
+- Demo solution files in class
+- Assign exercise files as homework
+- Use solution files for grading reference
 
-1. **Understand Structure** (15 minutes)
-   ```bash
-   # See what's been generated
-   cat generated_files.txt
-   
-   # Review complete examples
-   ls topic-1.1-text-preprocessing/beginner/
-   ```
-
-2. **Implementation Workflow**
-   ```bash
-   # Pick a skeleton exercise
-   cd topic-1.2-semantic-similarity/beginner
-   
-   # Open exercise file
-   # Implement TODO functions
-   # Test implementation
-   python practice1_exercise.py
-   
-   # Create solution
-   cp practice1_exercise.py practice1_solution.py
-   # Complete all TODOs with full implementation
-   ```
-
-3. **Use Templates**
-   - See: Implementation templates in [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)
+---
    - Reference: Complete exercises in Topic 1.1
    - Follow: Same structure and documentation style
 
@@ -145,107 +97,157 @@ nlp-labs/
 │   └── 📁 advanced/               ← Skeleton generated
 │
 ├── 📁 topic-1.3-ner-classification/
-│   ├── 📄 README.md               ← Topic concepts
-│   ├── 📁 beginner/               ← Skeleton generated
-│   ├── 📁 intermediate/           ← Skeleton generated
-│   └── 📁 advanced/               ← Skeleton generated
-│
-└── 📁 topic-1.4-consolidation/
-    ├── 📄 README.md               ← Topic concepts
-    ├── 📁 beginner/               ← RAG example COMPLETE
-    ├── 📁 intermediate/           ← Skeleton generated
-    └── 📁 advanced/               ← Skeleton generated
+## 📁 Repository Structure
 
-Total: 4 topics × 3 levels × 3 exercises × 2 files = 72 exercise files
-Plus: 10 infrastructure files = 82 files total
 ```
+nlp-labs/
+├── 📄 README.md                   ← Main documentation
+├── 📄 QUICK_START.md              ← Getting started guide
+├── 📄 EXERCISE_CATALOG.md         ← All exercises listed
+├── 📄 INDEX.md                    ← This file
+├── 📄 requirements.txt            ← Python dependencies
+├── 📄 .env.example                ← Azure OpenAI config template
+│
+├── 📁 topic-1.1-text-preprocessing/
+│   ├── README.md                  ← Concepts & objectives
+│   └── exercises/
+│       ├── demo_exercise.py
+│       ├── demo_solution.py
+│       ├── practice1_exercise.py
+│       ├── practice1_solution.py
+│       ├── practice2_exercise.py
+│       └── practice2_solution.py
+│
+├── 📁 topic-1.2-semantic-similarity/
+│   ├── README.md
+│   └── exercises/ (6 files)
+│
+├── 📁 topic-1.3-ner-classification/
+│   ├── README.md
+│   └── exercises/ (6 files)
+│
+└── 📁 topic-1.4-rag/
+    ├── README.md
+    └── exercises/ (6 files)
+```
+
+**Total:** 4 topics × 6 exercise files = 24 exercise files + documentation
 
 ---
 
-## 🗺️ Learning Paths
+## 🗺️ Suggested Learning Path
 
-### Path 1: NLP Fundamentals (2 weeks)
-**For**: Students new to NLP
-```
-Week 1:
-  ✓ Topic 1.1 Beginner (preprocessing, tokenization, BoW)
-  ✓ Topic 1.1 Intermediate (TF-IDF, stemming, Word2Vec)
+### Week 1: Text Fundamentals
+- **Topic 1.1**: Text Preprocessing
+  - Demo: Basic preprocessing pipeline
+  - Practice 1: Tokenization strategies
+  - Practice 2: Bag of Words implementation
 
-Week 2:
-  ✓ Topic 1.2 Beginner (similarity, inverted index, BM25)
-  ✓ Topic 1.3 Beginner (NER, sentiment, metrics)
-```
+### Week 2: Similarity & Classification
+- **Topic 1.2**: Semantic Similarity
+  - Demo: Cosine similarity
+  - Practice 1: Inverted index search
+  - Practice 2: BM25 ranking
 
-### Path 2: RAG & GenAI Focus (1 week)
-**For**: Developers building RAG systems
-```
-Days 1-2:
-  ✓ Topic 1.1 Intermediate (embeddings)
-  ✓ Topic 1.2 Intermediate (semantic search)
+- **Topic 1.3**: NER & Classification
+  - Demo: Rule-based NER
+  - Practice 1: Sentiment analysis
+  - Practice 2: Evaluation metrics
 
-Days 3-4:
-  ✓ Topic 1.4 Beginner (simple RAG)
-  ✓ Topic 1.4 Intermediate (vector DB RAG)
-
-Days 5-7:
-  ✓ Topic 1.4 Advanced (production RAG)
-  ✓ Build your own RAG project
-```
-
-### Path 3: Deep NLP (3 weeks)
-**For**: ML engineers going deep
-```
-Week 1: All beginner exercises
-Week 2: All intermediate exercises  
-Week 3: All advanced exercises + custom project
-```
+### Week 3: Advanced Integration
+- **Topic 1.4**: RAG & GenAI
+  - Demo: End-to-end NLP pipeline
+  - Practice 1: BoW vs embeddings
+  - Practice 2: RAG with Azure OpenAI
 
 ---
 
 ## 💻 Command Reference
 
-### Setup Commands
+### Setup
 ```bash
-# Clone or navigate to lab directory
-cd e:/ey-ai/nlp-labs
-
 # Install dependencies
 pip install -r requirements.txt
 
-# Download NLTK data (first time only)
-python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet')"
-
-# Configure Azure OpenAI
+# Configure Azure OpenAI (optional, for Topic 1.4)
 copy .env.example .env
-notepad .env  # Edit with your credentials
+# Edit .env with your credentials
 ```
 
 ### Running Exercises
 ```bash
-# Run a specific exercise
-python topic-1.1-text-preprocessing/beginner/demo_exercise.py
+# Navigate to exercises folder
+cd topic-1.1-text-preprocessing/exercises
 
-# Run solution to see expected output
-python topic-1.1-text-preprocessing/beginner/demo_solution.py
+# Try solving the exercise yourself
+python demo_exercise.py
 
-# Run all exercises in a level
-cd topic-1.1-text-preprocessing/beginner
-for f in *_solution.py; do python $f; done
+# Check the complete solution
+python demo_solution.py
 ```
 
-### Development Commands
-```bash
-# Generate remaining skeleton files
-python generate_exercises.py
+### Debugging in VS Code
+1. Open an exercise file
+2. Set breakpoints on TODO lines
+3. Press F5 to start debugging
+4. Step through code to understand flow
 
-# Check what was generated
-cat generated_files.txt
+---
 
-# Find all exercise files
-find . -name "*_exercise.py"
+## 📚 Exercise Catalog Quick Links
 
-# Find all solution files
-find . -name "*_solution.py"
+### Topic 1.1: Text Preprocessing
+- [Demo: Preprocessing Pipeline](topic-1.1-text-preprocessing/exercises/demo_exercise.py)
+- [Practice 1: Tokenization](topic-1.1-text-preprocessing/exercises/practice1_exercise.py)
+- [Practice 2: Bag of Words](topic-1.1-text-preprocessing/exercises/practice2_exercise.py)
+
+### Topic 1.2: Semantic Similarity
+- [Demo: Cosine Similarity](topic-1.2-semantic-similarity/exercises/demo_exercise.py)
+- [Practice 1: Inverted Index](topic-1.2-semantic-similarity/exercises/practice1_exercise.py)
+- [Practice 2: BM25 Ranking](topic-1.2-semantic-similarity/exercises/practice2_exercise.py)
+
+### Topic 1.3: NER & Classification
+- [Demo: Rule-Based NER](topic-1.3-ner-classification/exercises/demo_exercise.py)
+- [Practice 1: Sentiment Analysis](topic-1.3-ner-classification/exercises/practice1_exercise.py)
+- [Practice 2: Evaluation Metrics](topic-1.3-ner-classification/exercises/practice2_exercise.py)
+
+### Topic 1.4: RAG & GenAI
+- [Demo: End-to-End Pipeline](topic-1.4-rag/exercises/demo_exercise.py)
+- [Practice 1: Embeddings Comparison](topic-1.4-rag/exercises/practice1_exercise.py)
+- [Practice 2: Simple RAG](topic-1.4-rag/exercises/practice2_exercise.py)
+
+---
+
+## 🆘 Troubleshooting
+
+**Installation Issues**
+- Ensure Python 3.8+ is installed
+- Use virtual environment: `python -m venv venv`
+- Activate: `venv\Scripts\activate` (Windows) or `source venv/bin/activate` (Mac/Linux)
+
+**Azure OpenAI Connection**
+- Verify `.env` file has correct credentials
+- Check endpoint URL format (should end with `.openai.azure.com/`)
+- Ensure API key is valid
+- Topics 1.1-1.3 work without Azure OpenAI
+
+**Import Errors**
+- Run `pip install -r requirements.txt` again
+- Check for typos in package names
+- Use `pip list` to verify installed packages
+
+---
+
+## 📖 Additional Resources
+
+- [Python Official Docs](https://docs.python.org/3/)
+- [NLTK Book](https://www.nltk.org/book/)
+- [scikit-learn Tutorials](https://scikit-learn.org/stable/tutorial/index.html)
+- [Azure OpenAI Documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/)
+
+---
+
+**Ready to start? Head to [QUICK_START.md](QUICK_START.md) for a 5-minute setup guide!**
 ```
 
 ---
